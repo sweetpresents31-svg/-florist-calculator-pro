@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#e96fa5">
-<title>Florist Calculator Pro</title>
+<title>Florist Calculator Pro</title><title>Florist Calculator Pro</title>
+
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Florist Pro">
+<meta name="mobile-web-app-capable" content="yes">
+
 <style>
 :root{
   --pink:#e96fa5; --pink2:#f39bc1; --rose:#f6b7d1; --blush:#fdeaf2; --pale:#fff7fa;
@@ -1165,5 +1172,13 @@ if (urlParams.get("activate") === "1") {
 }
 </script>
 </div>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .catch(err => console.error("Service worker:", err));
+  });
+}
+</script>
 </body>
 </html>
