@@ -1144,7 +1144,25 @@ async function buyPlan(plan){
     if(button){ button.disabled=false; button.textContent=original; }
   }
 }
+const urlParams = new URLSearchParams(window.location.search);
 
+if (urlParams.get("activate") === "1") {
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      showAuthPanel("activate");
+
+      const gate = document.getElementById("authGate");
+      const app = document.getElementById("appShell");
+
+      if (gate) gate.classList.remove("hidden");
+      if (app) app.classList.add("hidden");
+
+      setAuthStatus(
+        "¡Pago recibido! Usa el mismo email con el que pagaste en Square para activar tu acceso."
+      );
+    }, 500);
+  });
+}
 </script>
 </div>
 </body>
