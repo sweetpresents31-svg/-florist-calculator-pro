@@ -1,0 +1,12 @@
+{
+  "name": "Florist Calculator Pro",
+  "short_name": "Florist Pro",
+  "description": "Calculadora profesional para floristas",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fff7fa",
+  "theme_color": "#e96fa5",
+  "orientation": "portrait-primary",
+  "lang": "es"
+}
