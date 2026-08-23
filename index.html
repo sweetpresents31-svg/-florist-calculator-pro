@@ -910,7 +910,14 @@ function renderSubscription(license){
   if(plan) plan.textContent = planLabel;
   if(start) start.textContent = formatDate(license.starts_at);
   if(end) end.textContent = formatDate(license.expires_at);
-  if(days) days.textContent = String(Math.max(0, Number(license.days_remaining)||0));
+if(days){
+  const expiration = license.expires_at ? new Date(license.expires_at) : null;
+  const remaining = expiration
+    ? Math.max(0, Math.ceil((expiration.getTime() - Date.now()) / 86400000))
+    : 0;
+
+  days.textContent = String(remaining);
+}
   if(status) status.textContent = license.is_active ? "Activa" : "Vencida";
   if(note) note.textContent = license.is_active
     ? `Tu plan ${planLabel.toLowerCase()} está activo hasta ${formatDate(license.expires_at)}.`
