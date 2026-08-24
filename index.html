@@ -994,52 +994,34 @@ if(days){
 
 async function verifyCurrentUserLicense(session){
   if(!session?.user) {
-    return {licensed:false, license:null, accessType:"none"};
+   async function verifyCurrentUserLicense(session){
+  if(!session?.user){
+    return {
+      licensed:false,
+      license:null,
+      accessType:"none"
+    };
   }
 
   const { data, error } = await supabaseClient.rpc("get_florist_access");
 
   if(error){
     console.error("Access verification error:", error);
-    return {licensed:false, license:null, accessType:"none"};
+    return {
+      licensed:false,
+      license:null,
+      accessType:"none"
+    };
   }
 
   const access = Array.isArray(data) ? data[0] : data;
 
   if(!access){
-    return {licensed:false, license:null, accessType:"none"};
-  }
-
-  return {
-    licensed: !!access.access_granted,
-    accessType: access.access_type || "none",
-    license: {
-      exists: true,
-      is_active: !!access.access_granted,
-      plan: access.plan,
-      starts_at: access.starts_at,
-      expires_at: access.expires_at,
-      days_remaining: access.days_remaining,
-      square_status: access.square_status
-    }
-  };
-}
-  async function verifyCurrentUserLicense(session){
-  if(!session?.user) {
-    return {licensed:false, license:null, accessType:"none"};
-  }
-
-  const { data, error } = await supabaseClient.rpc("get_florist_access");
-
-  if(error){
-    console.error("Access verification error:", error);
-    return {licensed:false, license:null, accessType:"none"};
-  }
-
-  const access = Array.isArray(data) ? data[0] : data;
-
-  if(!access){
-    return {licensed:false, license:null, accessType:"none"};
+    return {
+      licensed:false,
+      license:null,
+      accessType:"none"
+    };
   }
 
   return {
@@ -1057,78 +1039,100 @@ async function verifyCurrentUserLicense(session){
   };
 }
 
-async function applyAuthState(session) {
-  };
-}
-
-async function applyAuthState(session) {
+async function applyAuthState(session){
   const gate = document.getElementById("authGate");
   const app = document.getElementById("appShell");
   const ue = document.getElementById("userEmailBtn");
   const planBtn = document.getElementById("planBtn");
 
-  if(session && session.user) {
+  if(session?.user){
     const verification = await verifyCurrentUserLicense(session);
+
     if(!verification.licensed){
       await supabaseClient.auth.signOut();
-      cloudQuotes = [];
-      renderHistory();
-      if(ue) ue.style.display="none";
-      if(planBtn) planBtn.style.display="none";
+
+      if(ue) ue.style.display = "none";
+      if(planBtn) planBtn.style.display = "none";
+
       app.classList.add("hidden");
       gate.classList.remove("hidden");
+
       showAuthPanel("login");
 
-      if(verification.license && verification.license.exists && !verification.license.is_active){
-        setAuthStatus(
-          `Tu suscripción está vencida desde ${formatDate(verification.license.expires_at)}. Renueva tu plan mensual o anual para recuperar el acceso.`,
-          "err"
-        );
-      }else{
-        setAuthStatus("Este email no tiene una licencia activa. Si ya compraste, contacta al vendedor para activar tu acceso.", "err");
-      }
+      setAuthStatus(
+        "Tu prueba gratis terminó o no tienes una suscripción activa. Elige un plan para continuar.",
+        "err"
+      );
+
       return;
     }
 
     gate.classList.add("hidden");
     app.classList.remove("hidden");
+
     if(ue){
-      ue.textContent=session.user.email||"Cuenta";
-      ue.style.display="inline-block";
+      ue.textContent = session.user.email || "Cuenta";
+      ue.style.display = "inline-block";
     }
+
     renderSubscription(verification.license);
     await loadHistory();
     updateQuoteBadge();
-  } else {
-    cloudQuotes = [];
-    renderHistory();
-    if(ue) ue.style.display="none";
-    if(planBtn) planBtn.style.display="none";
+
+  }else{
+    if(ue) ue.style.display = "none";
+    if(planBtn) planBtn.style.display = "none";
+
     app.classList.add("hidden");
     gate.classList.remove("hidden");
   }
 }
 
-async function signInUser() {
-  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-  const password = document.getElementById("loginPassword").value;
+async function signInUser(){
+  const email = document
+    .getElementById("loginEmail")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
   if(!email || !password){
-    setAuthStatus("Escribe tu email y contraseña.", "err");
+    setAuthStatus(
+      "Escribe tu email y contraseña.",
+      "err"
+    );
     return;
   }
 
   setAuthStatus("Verificando acceso...");
-  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
-  if(error) {
-    setAuthStatus("No se pudo iniciar sesión. Verifica tu email y contraseña.", "err");
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+    setAuthStatus(
+      "No se pudo iniciar sesión. Verifica tu email y contraseña.",
+      "err"
+    );
     return;
   }
 
-  const licensed = await verifyCurrentUserLicense(data.session);
-  if(!licensed.licensed){
+  const verification =
+    await verifyCurrentUserLicense(data.session);
+
+  if(!verification.licensed){
     await supabaseClient.auth.signOut();
-    setAuthStatus("Tu cuenta existe, pero este email no tiene una licencia activa.", "err");
+
+    setAuthStatus(
+      "Tu prueba gratis terminó o este email no tiene una suscripción activa.",
+      "err"
+    );
+
     return;
   }
 
@@ -1137,50 +1141,97 @@ async function signInUser() {
 }
 
 async function activateAccess(){
-  const email = document.getElementById("activateEmail").value.trim().toLowerCase();
-  const p1 = document.getElementById("activatePassword").value;
-  const p2 = document.getElementById("activatePassword2").value;
+  const email = document
+    .getElementById("activateEmail")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const p1 =
+    document.getElementById("activatePassword").value;
+
+  const p2 =
+    document.getElementById("activatePassword2").value;
 
   if(!email){
-    setAuthStatus("Escribe el email con el que realizaste tu compra.", "err");
+    setAuthStatus(
+      "Escribe tu email.",
+      "err"
+    );
     return;
   }
+
   if(p1.length < 8){
-    setAuthStatus("La contraseña debe tener al menos 8 caracteres.", "err");
+    setAuthStatus(
+      "La contraseña debe tener al menos 8 caracteres.",
+      "err"
+    );
     return;
   }
+
   if(p1 !== p2){
-    setAuthStatus("Las contraseñas no coinciden.", "err");
+    setAuthStatus(
+      "Las contraseñas no coinciden.",
+      "err"
+    );
     return;
   }
 
-  setAuthStatus("Creando tu prueba gratis de 7 días...");
+  setAuthStatus(
+    "Creando tu prueba gratis de 7 días..."
+  );
 
-  const { data, error } = await supabaseClient.auth.signUp({
-    email,
-    password: p1,
-    options: { emailRedirectTo: window.location.origin }
-  });
+  const { data, error } =
+    await supabaseClient.auth.signUp({
+      email,
+      password: p1,
+      options: {
+        emailRedirectTo: window.location.origin
+      }
+    });
 
   if(error){
-    const m = String(error.message||"").toLowerCase();
-    if(m.includes("already") || m.includes("registered")){
-      setAuthStatus("Este email ya tiene una cuenta. Usa “Iniciar sesión” o “Olvidé mi contraseña”.", "err");
+    console.error("Signup error:", error);
+
+    const message =
+      String(error.message || "").toLowerCase();
+
+    if(
+      message.includes("already") ||
+      message.includes("registered")
+    ){
+      setAuthStatus(
+        "Este email ya tiene una cuenta. Usa Iniciar sesión.",
+        "err"
+      );
     }else{
-      setAuthStatus("No se pudo crear la cuenta. Intenta nuevamente.", "err");
+      setAuthStatus(
+        "No se pudo crear la cuenta. Intenta nuevamente.",
+        "err"
+      );
     }
+
     return;
   }
 
   if(data.session){
-    setAuthStatus("¡Acceso activado! Entrando a tu cuenta...");
+    setAuthStatus(
+      "¡Prueba gratis activada! Entrando..."
+    );
+
     await applyAuthState(data.session);
+
   }else{
     showAuthPanel("login");
-    document.getElementById("loginEmail").value = email;
-    setAuthStatus("Cuenta creada. Revisa tu email y confirma tu dirección. Después regresa aquí e inicia sesión.");
+
+    document.getElementById("loginEmail").value =
+      email;
+
+    setAuthStatus(
+      "Cuenta creada. Revisa tu email, confirma tu dirección y después inicia sesión."
+    );
   }
-}
+} 
 
 async function signOutUser() {
   await supabaseClient.auth.signOut();
