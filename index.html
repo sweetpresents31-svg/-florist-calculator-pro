@@ -993,6 +993,37 @@ if(days){
 }
 
 async function verifyCurrentUserLicense(session){
+  if(!session?.user) {
+    return {licensed:false, license:null, accessType:"none"};
+  }
+
+  const { data, error } = await supabaseClient.rpc("get_florist_access");
+
+  if(error){
+    console.error("Access verification error:", error);
+    return {licensed:false, license:null, accessType:"none"};
+  }
+
+  const access = Array.isArray(data) ? data[0] : data;
+
+  if(!access){
+    return {licensed:false, license:null, accessType:"none"};
+  }
+
+  return {
+    licensed: !!access.access_granted,
+    accessType: access.access_type || "none",
+    license: {
+      exists: true,
+      is_active: !!access.access_granted,
+      plan: access.plan,
+      starts_at: access.starts_at,
+      expires_at: access.expires_at,
+      days_remaining: access.days_remaining,
+      square_status: access.square_status
+    }
+  };
+}
   const email = session?.user?.email || "";
   if(!email) return {licensed:false, license:null};
 
