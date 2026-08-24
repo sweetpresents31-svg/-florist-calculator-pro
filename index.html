@@ -201,8 +201,10 @@ th{background:var(--blush);font-size:11px}
   <div style="text-align:center;margin-bottom:10px;">
     <h3 style="margin:0;color:#563744;font-size:16px;">Elige tu plan</h3>
     <p style="margin:5px 0 0;color:#806774;font-size:12px;">
-      Compra tu acceso y luego activa tu cuenta con el mismo email.
-    </p>
+  Prueba Florist Calculator Pro GRATIS por 7 días. Después elige el plan mensual o anual para continuar.
+</p><div style="margin-top:8px;padding:8px 10px;border-radius:10px;background:#eaf5ef;color:#477764;font-size:11px;font-weight:800;">
+  🎁 7 días de prueba gratis • Acceso completo
+</div>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -965,7 +967,10 @@ function renderSubscription(license){
     return;
   }
 
-  const planLabel = license.plan === "yearly" ? "Anual" : "Mensual";
+  const planLabel =
+  license.plan === "trial" ? "Prueba gratis" :
+  license.plan === "yearly" ? "Anual" :
+  "Mensual";
   if(plan) plan.textContent = planLabel;
   if(start) start.textContent = formatDate(license.starts_at);
   if(end) end.textContent = formatDate(license.expires_at);
@@ -990,8 +995,46 @@ if(days){
 async function verifyCurrentUserLicense(session){
   const email = session?.user?.email || "";
   if(!email) return {licensed:false, license:null};
+
+  // 1. Si tiene una suscripción pagada activa, darle acceso.
   const result = await hasActiveLicense(email);
-  return {licensed: result.ok && result.licensed, license: result.license};
+
+  if(result.ok && result.licensed){
+    return {
+      licensed:true,
+      license:result.license,
+      accessType:"paid"
+    };
+  }
+
+  // 2. Si no tiene plan pagado, comprobar prueba gratis de 7 días.
+  const createdAt = session?.user?.created_at;
+
+  if(createdAt){
+    const trialStart = new Date(createdAt);
+    const trialEnd = new Date(trialStart.getTime() + (7 * 24 * 60 * 60 * 1000));
+    const trialActive = Date.now() < trialEnd.getTime();
+
+    if(trialActive){
+      return {
+        licensed:true,
+        accessType:"trial",
+        license:{
+          exists:true,
+          is_active:true,
+          plan:"trial",
+          starts_at:trialStart.toISOString(),
+          expires_at:trialEnd.toISOString()
+        }
+      };
+    }
+  }
+
+  return {
+    licensed:false,
+    license:result.license || null,
+    accessType:"none"
+  };
 }
 
 async function applyAuthState(session) {
@@ -1059,7 +1102,7 @@ async function signInUser() {
   }
 
   const licensed = await verifyCurrentUserLicense(data.session);
-  if(!licensed){
+  if(!licensed.licensed){
     await supabaseClient.auth.signOut();
     setAuthStatus("Tu cuenta existe, pero este email no tiene una licencia activa.", "err");
     return;
@@ -1087,16 +1130,7 @@ async function activateAccess(){
     return;
   }
 
-  setAuthStatus("Comprobando tu licencia...");
-  const license = await hasActiveLicense(email);
-  if(!license.ok){
-    setAuthStatus("No pudimos verificar tu licencia. Intenta nuevamente.", "err");
-    return;
-  }
-  if(!license.licensed){
-    setAuthStatus("Este email todavía no tiene una licencia activa. Usa el mismo email de tu compra o contacta al vendedor.", "err");
-    return;
-  }
+  setAuthStatus("Creando tu prueba gratis de 7 días...");
 
   const { data, error } = await supabaseClient.auth.signUp({
     email,
