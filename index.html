@@ -1024,47 +1024,40 @@ async function verifyCurrentUserLicense(session){
     }
   };
 }
-  const email = session?.user?.email || "";
-  if(!email) return {licensed:false, license:null};
-
-  // 1. Si tiene una suscripción pagada activa, darle acceso.
-  const result = await hasActiveLicense(email);
-
-  if(result.ok && result.licensed){
-    return {
-      licensed:true,
-      license:result.license,
-      accessType:"paid"
-    };
+  async function verifyCurrentUserLicense(session){
+  if(!session?.user) {
+    return {licensed:false, license:null, accessType:"none"};
   }
 
-  // 2. Si no tiene plan pagado, comprobar prueba gratis de 7 días.
-  const createdAt = session?.user?.created_at;
+  const { data, error } = await supabaseClient.rpc("get_florist_access");
 
-  if(createdAt){
-    const trialStart = new Date(createdAt);
-    const trialEnd = new Date(trialStart.getTime() + (7 * 24 * 60 * 60 * 1000));
-    const trialActive = Date.now() < trialEnd.getTime();
+  if(error){
+    console.error("Access verification error:", error);
+    return {licensed:false, license:null, accessType:"none"};
+  }
 
-    if(trialActive){
-      return {
-        licensed:true,
-        accessType:"trial",
-        license:{
-          exists:true,
-          is_active:true,
-          plan:"trial",
-          starts_at:trialStart.toISOString(),
-          expires_at:trialEnd.toISOString()
-        }
-      };
-    }
+  const access = Array.isArray(data) ? data[0] : data;
+
+  if(!access){
+    return {licensed:false, license:null, accessType:"none"};
   }
 
   return {
-    licensed:false,
-    license:result.license || null,
-    accessType:"none"
+    licensed: !!access.access_granted,
+    accessType: access.access_type || "none",
+    license: {
+      exists: true,
+      is_active: !!access.access_granted,
+      plan: access.plan,
+      starts_at: access.starts_at,
+      expires_at: access.expires_at,
+      days_remaining: access.days_remaining,
+      square_status: access.square_status
+    }
+  };
+}
+
+async function applyAuthState(session) {
   };
 }
 
