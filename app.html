@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e96fa5">
+
+<title>Florist Calculator Pro | Calculadora para Floristas</title>
+<meta name="description" content="Florist Calculator Pro es una calculadora para floristas que ayuda a calcular costos, mano de obra, margen, ganancias y precios de arreglos florales. Crea cotizaciones y controla la rentabilidad de tu negocio floral.">
+<meta name="keywords" content="calculadora para floristas, florist calculator, floral pricing calculator, precio arreglos florales, costos floristería, ganancias floristería, margen floral, cotizaciones florales, negocio floral">
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://florist-calculator.netlify.app/">
+<link rel="manifest" href="/manifest.webmanifest">
+
+<meta property="og:title" content="Florist Calculator Pro | Calculadora para Floristas">
+<meta property="og:description" content="Calcula costos, precios, ganancias y márgenes de tus arreglos florales. Crea cotizaciones y controla la rentabilidad de tu negocio floral.">
+<meta property="og:url" content="https://florist-calculator.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://florist-calculator.netlify.app/icon-512.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Florist Calculator Pro | Calculadora para Floristas">
+<meta name="twitter:description" content="Calcula costos, precios, ganancias y márgenes de tus arreglos florales.">
+<meta name="twitter:image" content="https://florist-calculator.netlify.app/icon-512.png">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Florist Pro">
+<meta name="mobile-web-app-capable" content="yes">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Florist Calculator Pro",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web, iOS",
+  "url": "https://florist-calculator.netlify.app/",
+  "description": "Calculadora para floristas que ayuda a calcular costos, mano de obra, precios, ganancias y márgenes de arreglos florales, además de crear cotizaciones y llevar historial.",
+  "offers": [
+    {
+      "@type": "Offer",
+      "price": "9.99",
+      "priceCurrency": "USD",
+      "category": "subscription"
+    },
+    {
+      "@type": "Offer",
+      "price": "99.99",
+      "priceCurrency": "USD",
+      "category": "subscription"
+    }
+  ],
+  "featureList": [
+    "Cálculo de costos de arreglos florales",
+    "Cálculo de mano de obra",
+    "Cálculo de margen y ganancia",
+    "Precios sugeridos",
+    "Cotizaciones",
+    "Guardar e imprimir PDF",
+    "Historial de ventas y ganancias",
+    "Prueba gratis de 7 días"
+  ]
+}
+</script>
+
+<style>
+:root{
+  --pink:#e96fa5;
+  --pink2:#f39bc1;
+  --rose:#f6b7d1;
+  --blush:#fdeaf2;
+  --pale:#fff7fa;
+  --dark:#563744;
+  --muted:#806774;
+  --green:#6e9484;
+  --gold:#c99c61;
+  --white:#fff;
+  --line:#edbfd2;
+  --soft:#f8f4f6;
+  --danger:#b94a62;
+  --shadow:0 14px 34px rgba(144,72,104,.14);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--dark);
+  background:linear-gradient(180deg,#fff8fb 0%,#fdeaf2 55%,#fff 100%);
+}
+button,input,textarea,select{font:inherit}
+.wrap{max-width:900px;margin:0 auto;padding:14px 14px 70px}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  margin:-14px -14px 14px;
+  padding:10px 14px;
+  background:rgba(255,248,251,.94);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #f2d7e2;
+}
+.topbar-inner{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between
+}
+.brand-mini{font-weight:900;color:var(--pink);font-size:15px}
+.nav-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.iconbtn{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:12px;
+  padding:9px 11px;
+  color:var(--dark);
+  font-weight:800
+}
+
+.hero{
+  background:linear-gradient(135deg,var(--pink),var(--pink2));
+  color:white;
+  border-radius:26px;
+  padding:28px 20px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+  overflow:hidden;
+  position:relative;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  right:-35px;
+  bottom:-55px;
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  background:rgba(255,255,255,.14)
+}
+.hero h1{font-size:27px;line-height:1.08;margin:0 0 7px;font-weight:900}
+.hero p{margin:0;font-size:14px;opacity:.96}
+.hero .pill{
+  display:inline-block;
+  margin-top:12px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.18);
+  font-size:12px;
+  font-weight:800
+}
+
+.card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:16px;
+  margin:13px 0;
+  box-shadow:var(--shadow)
+}
+.card h2{font-size:17px;margin:0 0 12px;color:var(--pink)}
+.card h3{font-size:14px;margin:14px 0 8px;color:var(--dark)}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:660px){.grid,.grid3{grid-template-columns:1fr}}
+
+.field{
+  background:var(--pale);
+  border:1px solid #f2d1df;
+  border-radius:14px;
+  padding:10px
+}
+label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}
+input,textarea,select{
+  width:100%;
+  font-size:17px;
+  padding:11px;
+  border:1px solid #e6bccd;
+  border-radius:11px;
+  background:white;
+  color:var(--dark);
+  outline:none
+}
+textarea{min-height:82px;resize:vertical}
+input:focus,textarea:focus,select:focus{
+  border-color:var(--pink);
+  box-shadow:0 0 0 3px rgba(233,111,165,.12)
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:10px
+}
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  background:var(--blush);
+  font-size:11px;
+  font-weight:900;
+  color:var(--dark)
+}
+
+.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:560px){.result-grid{grid-template-columns:1fr}}
+.result{border-radius:16px;padding:13px;background:var(--blush);border:1px solid var(--line)}
+.result strong{display:block;font-size:12px;margin-bottom:5px}
+.result span{font-size:23px;font-weight:900;color:var(--pink)}
+.result.main{background:#eaf5ef;border-color:#c7e1d5}
+.result.main span{color:#477764}
+.result.gold{background:#fff7e9;border-color:#ead5ac}
+.result.gold span{color:#9b7437}
+
+.row{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+button{
+  border:0;
+  border-radius:13px;
+  padding:13px 14px;
+  font-weight:900;
+  font-size:14px;
+  cursor:pointer
+}
+.primary{background:var(--pink);color:#fff}
+.secondary{background:var(--blush);color:var(--dark)}
+.green{background:var(--green);color:white}
+.dark{background:var(--dark);color:white}
+.danger{background:#f8dde4;color:#8b344a}
+
+.small{font-size:12px;line-height:1.5;color:var(--muted)}
+.notice{
+  font-size:12px;
+  line-height:1.5;
+  padding:11px 12px;
+  border-radius:13px;
+  background:var(--blush);
+  border:1px solid var(--line)
+}
+
+.tiers{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+@media(max-width:700px){.tiers{grid-template-columns:repeat(2,1fr)}}
+.tier{
+  background:var(--pale);
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:10px;
+  text-align:center
+}
+.tier b{font-size:11px;display:block}
+.tier .price{font-size:17px;font-weight:900;color:var(--pink);margin-top:5px}
+
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:9px 7px;border-bottom:1px solid #f0d7e1;text-align:left;vertical-align:top}
+th{background:var(--blush);font-size:11px}
+.empty{text-align:center;color:var(--muted);padding:20px}
+
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:700px){.kpi{grid-template-columns:repeat(2,1fr)}}
+.kbox{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:11px}
+.kbox b{display:block;font-size:11px}
+.kbox span{font-size:18px;font-weight:900;color:var(--pink)}
+
+.footer{text-align:center;font-size:11px;color:#8d7380;margin-top:22px}
+.hidden{display:none!important}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(67,37,50,.55);
+  z-index:80;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px
+}
+.modal{
+  max-width:560px;
+  width:100%;
+  background:white;
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 25px 70px rgba(0,0,0,.25)
+}
+.modal h2{margin:0 0 8px;color:var(--pink)}
+.welcome-list{padding-left:18px;line-height:1.55;font-size:13px}
+
+.quote-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+@media(max-width:560px){.quote-head{display:block}}
+.quote-brand{font-size:18px;font-weight:900;color:var(--pink)}
+
+.print-only{display:none}
+@media print{
+  body{background:white}
+  .topbar,.hero,.row,.no-print,.overlay{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .card{box-shadow:none;border:0;padding:0;margin:0 0 14px}
+  .screen-only{display:none!important}
+  .print-only{display:block}
+  input,textarea,select{border:0;padding:0;background:white}
+  .field{border:0;padding:5px 0;background:white}
+  .result{break-inside:avoid}
+}
+
+.auth-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:12px 0
+}
+.auth-tab{
+  background:var(--blush);
+  color:var(--dark);
+  padding:11px;
+  border-radius:12px
+}
+.auth-tab.active{background:var(--pink);color:#fff}
+.auth-panel.hidden{display:none!important}
+.auth-status{
+  padding:10px 12px;
+  border-radius:12px;
+  margin-top:10px;
+  font-size:12px;
+  line-height:1.45
+}
+.auth-status.ok{background:#eaf5ef;color:#477764;border:1px solid #c7e1d5}
+.auth-status.err{background:#fff0f4;color:#8b344a;border:1px solid #efbfd0}
+
+.public-info{
+  margin-top:14px;
+  padding:14px;
+  background:#fff7fa;
+  border:1px solid #edbfd2;
+  border-radius:14px;
+  color:#563744;
+  text-align:left;
+  font-size:12px;
+  line-height:1.6
+}
+.trial-badge{
+  margin-top:8px;
+  padding:8px 10px;
+  border-radius:10px;
+  background:#eaf5ef;
+  color:#477764;
+  font-size:11px;
+  font-weight:800
+}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.plan-grid{grid-template-columns:1fr}}
+.plan-card{
+  border:1px solid #edbfd2;
+  border-radius:16px;
+  padding:14px;
+  background:#fff7fa;
+  text-align:center
+}
+.plan-card.yearly{border:2px solid #c99c61;background:#fffaf1;position:relative}
+.best-value{
+  position:absolute;
+  top:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#c99c61;
+  color:white;
+  border-radius:999px;
+  padding:4px 9px;
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap
+}
+.plan-price{font-size:25px;font-weight:900;margin:7px 0}
+.plan-link{
+  display:block;
+  text-decoration:none;
+  color:white;
+  padding:11px 8px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:13px
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<!-- AUTH / PUBLIC LANDING -->
+<div id="authGate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(180deg,#fff8fb,#fdeaf2);">
+  <div style="width:100%;max-width:470px;background:white;border:1px solid #edbfd2;border-radius:24px;padding:22px;box-shadow:0 18px 44px rgba(144,72,104,.16);">
+
+    <div style="text-align:center;margin-bottom:12px;">
+      <div style="font-size:34px">🌸</div>
+      <h1 style="margin:6px 0 5px;color:#e96fa5;font-size:25px;">
+        Florist Calculator Pro — Calculadora de Precios para Floristas
+      </h1>
+      <p style="margin:0;color:#806774;font-size:13px;">
+        Calcula costos, precios y ganancias sin adivinar.
+      </p>
+
+      <div class="public-info">
+        <p style="margin:0 0 8px;">
+          <strong>Calcula cuánto cobrar por tus arreglos florales con mayor claridad.</strong>
+        </p>
+        <p style="margin:0 0 8px;">
+          Agrega flores, materiales, mano de obra, desperdicio, gastos, comisiones y el margen que deseas ganar.
+        </p>
+        <p style="margin:0;">
+          También puedes crear cotizaciones, probar distintos precios, guardar pedidos, generar PDF y consultar tu historial de ventas y rentabilidad.
+        </p>
+      </div>
+    </div>
+
+    <div style="margin:16px 0 18px;">
+      <div style="text-align:center;margin-bottom:10px;">
+        <h3 style="margin:0;color:#563744;font-size:16px;">Empieza gratis</h3>
+        <p style="margin:5px 0 0;color:#806774;font-size:12px;">
+          Prueba Florist Calculator Pro GRATIS por 7 días. No necesitas pagar para comenzar.
+        </p>
+        <div class="trial-badge">🎁 7 días de prueba gratis • Acceso completo</div>
+      </div>
+
+      <button class="primary" style="width:100%;margin-bottom:14px;" onclick="showAuthPanel('activate')">
+        Comenzar prueba gratis
+      </button>
+
+      <div class="plan-grid">
+        <div class="plan-card">
+          <div style="font-weight:900;color:#563744;">Mensual</div>
+          <div class="plan-price" style="color:#e96fa5;">$9.99</div>
+          <div style="font-size:11px;color:#806774;margin-bottom:10px;">por mes</div>
+          <a class="plan-link" href="https://square.link/u/uZxrvygL" style="background:#e96fa5;">
+            Suscribirme mensual
+          </a>
+        </div>
+
+        <div class="plan-card yearly">
+          <div class="best-value">MEJOR VALOR</div>
+          <div style="font-weight:900;color:#563744;margin-top:4px;">Anual</div>
+          <div class="plan-price" style="color:#c99c61;">$99.99</div>
+          <div style="font-size:11px;color:#806774;margin-bottom:3px;">por año</div>
+          <div style="font-size:10px;color:#6e9484;font-weight:800;margin-bottom:8px;">
+            Ahorras $19.89 al año
+          </div>
+          <a class="plan-link" href="https://square.link/u/lOjzD32y" style="background:#6e9484;">
+            Suscribirme anual
+          </a>
+        </div>
+      </div>
+
+      <div class="notice" style="margin-top:12px;text-align:center;">
+        Si ya tienes una suscripción, inicia sesión o activa tu cuenta con el mismo email que usaste en Square.
+      </div>
+    </div>
+
+    <div class="auth-tabs" id="authTabs">
+      <button id="loginTabBtn" class="auth-tab active" onclick="showAuthPanel('login')">Iniciar sesión</button>
+      <button id="activateTabBtn" class="auth-tab" onclick="showAuthPanel('activate')">Crear / activar cuenta</button>
+    </div>
+
+    <div id="loginPanel" class="auth-panel">
+      <div class="field" style="margin-bottom:10px;">
+        <label>Email</label>
+        <input id="loginEmail" type="email" autocomplete="email" placeholder="tu@email.com">
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <label>Contraseña</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <div class="row" style="margin-top:12px;">
+        <button class="primary" style="width:100%" onclick="signInUser()">Iniciar sesión</button>
+      </div>
+      <div class="row" style="margin-top:8px;">
+        <button class="secondary" style="width:100%" onclick="sendReset()">Olvidé mi contraseña</button>
+      </div>
+    </div>
+
+    <div id="activatePanel" class="auth-panel hidden">
+      <div class="notice" style="margin-bottom:10px">
+        Crea tu cuenta para comenzar tu prueba gratis de 7 días. Usa un email válido porque tendrás que confirmarlo.
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <label>Tu email</label>
+        <input id="activateEmail" type="email" autocomplete="email" placeholder="tu@email.com">
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <label>Crea tu contraseña</label>
+        <input id="activatePassword" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <label>Confirma tu contraseña</label>
+        <input id="activatePassword2" type="password" autocomplete="new-password" placeholder="Repite tu contraseña">
+      </div>
+      <div class="row">
+        <button class="primary" style="width:100%" onclick="activateAccess()">Comenzar prueba gratis</button>
+      </div>
+    </div>
+
+    <div id="recoveryPanel" class="auth-panel hidden">
+      <div class="notice" style="margin-bottom:10px">
+        Crea una contraseña nueva para tu cuenta.
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <label>Nueva contraseña</label>
+        <input id="recoveryPassword" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <label>Confirma la nueva contraseña</label>
+        <input id="recoveryPassword2" type="password" autocomplete="new-password" placeholder="Repite tu contraseña">
+      </div>
+      <div class="row">
+        <button class="primary" style="width:100%" onclick="updateRecoveredPassword()">Guardar nueva contraseña</button>
+      </div>
+    </div>
+
+    <p id="authMessage" class="small" style="text-align:center;margin-top:12px;"></p>
+    <div id="authStatusBox" class="auth-status hidden"></div>
+
+    <p class="small" style="text-align:center;margin-top:10px;">
+      Tu contraseña es privada. El acceso se valida automáticamente con tu prueba gratis o suscripción activa.
+    </p>
+  </div>
+</div>
+
+<!-- PRIVATE APP -->
+<div id="appShell" class="hidden">
+
+  <div class="overlay" id="welcomeModal">
+    <div class="modal">
+      <h2>🌸 Bienvenida a Florist Calculator Pro</h2>
+      <p class="small">Una herramienta para calcular, cotizar y guardar arreglos florales desde tu teléfono.</p>
+      <ul class="welcome-list">
+        <li>Calcula costo real, mano de obra, desperdicio y comisiones.</li>
+        <li>Obtén precio sugerido según tu margen.</li>
+        <li>Prueba cualquier precio antes de cobrarlo.</li>
+        <li>Guarda cotizaciones y pedidos en tu cuenta.</li>
+        <li>Imprime o guarda cada cotización como PDF.</li>
+        <li>Consulta un mini dashboard de ventas y ganancias.</li>
+      </ul>
+      <div class="field">
+        <label>Nombre de tu negocio</label>
+        <input id="welcomeBusiness" type="text" placeholder="Ej. Flores Bella">
+      </div>
+      <div class="row">
+        <button class="primary" onclick="startApp()">Comenzar</button>
+      </div>
+      <p class="small">Tus cotizaciones se guardan de forma privada en tu cuenta para que puedas consultarlas desde otros dispositivos.</p>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-mini" id="topBusiness">Florist Calculator Pro</div>
+      <div class="nav-actions">
+        <button class="iconbtn" onclick="newQuote()">＋ Nueva</button>
+        <button class="iconbtn" onclick="scrollToHistory()">Historial</button>
+        <button class="iconbtn" id="planBtn" style="display:none"></button>
+        <button class="iconbtn" id="userEmailBtn" style="display:none"></button>
+        <button class="iconbtn" onclick="signOutUser()">Salir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>🌸 Florist Calculator Pro</h1>
+      <p>Calcula, cotiza y controla la rentabilidad de tus arreglos desde el celular.</p>
+      <span class="pill">Precio • Ganancia • Margen • Cotizaciones</span>
+    </section>
+
+    <section class="card" id="subscriptionCard">
+      <div class="section-title">
+        <h2>Mi acceso</h2>
+        <span class="badge" id="subscriptionStatus">Verificando...</span>
+      </div>
+      <div class="kpi">
+        <div class="kbox"><b>Plan</b><span id="subscriptionPlan">—</span></div>
+        <div class="kbox"><b>Inicio</b><span id="subscriptionStart" style="font-size:14px">—</span></div>
+        <div class="kbox"><b>Vence</b><span id="subscriptionEnd" style="font-size:14px">—</span></div>
+        <div class="kbox"><b>Días restantes</b><span id="subscriptionDays">—</span></div>
+      </div>
+      <p class="small" id="subscriptionNote">Tu acceso se valida automáticamente al iniciar sesión.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>1. Datos de la cotización</h2>
+        <span class="badge" id="quoteNumberBadge">Q-0001</span>
+      </div>
+      <div class="grid">
+        <div class="field"><label>Nombre del negocio</label><input id="businessName" type="text" placeholder="Tu florería"></div>
+        <div class="field"><label>Teléfono / contacto</label><input id="businessContact" type="text" placeholder="(000) 000-0000"></div>
+        <div class="field"><label>Cliente</label><input id="customerName" type="text" placeholder="Nombre del cliente"></div>
+        <div class="field"><label>Teléfono del cliente</label><input id="customerPhone" type="text" placeholder="Teléfono"></div>
+        <div class="field"><label>Nombre del arreglo</label><input id="arrangementName" type="text" placeholder="Ej. Ramo 50 rosas"></div>
+        <div class="field"><label>Ocasión</label><input id="occasion" type="text" placeholder="Cumpleaños, aniversario..."></div>
+        <div class="field"><label>Fecha de entrega / pickup</label><input id="dueDate" type="date"></div>
+        <div class="field"><label>Tipo de entrega</label>
+          <select id="deliveryType">
+            <option>Pickup</option>
+            <option>Delivery</option>
+            <option>Shipping</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Costos del arreglo</h2>
+      <div class="grid">
+        <div class="field"><label>Flores naturales ($)</label><input id="flowers" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Follajes / greenery ($)</label><input id="foliage" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Base, caja o florero ($)</label><input id="base" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Espuma / mecánica floral ($)</label><input id="mechanics" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Papel, listón y envoltura ($)</label><input id="wrap" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Toppers / accesorios ($)</label><input id="accessories" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Tarjeta / empaque ($)</label><input id="packaging" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Otros materiales ($)</label><input id="other" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. Mano de obra, gastos y margen</h2>
+      <div class="grid">
+        <div class="field"><label>Horas de trabajo</label><input id="hours" type="number" inputmode="decimal" min="0" step="0.25" value="0"></div>
+        <div class="field"><label>Tarifa por hora ($)</label><input id="hourly" type="number" inputmode="decimal" min="0" step="0.01" value="20"></div>
+        <div class="field"><label>Entrega / gasolina ($)</label><input id="delivery" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Gastos generales asignados ($)</label><input id="overhead" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Desperdicio estimado (%)</label><input id="waste" type="number" inputmode="decimal" min="0" max="100" step="0.5" value="5"></div>
+        <div class="field"><label>Comisión de plataforma (%)</label><input id="feePct" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="0"></div>
+        <div class="field"><label>Cargo fijo de plataforma ($)</label><input id="fixedFee" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Margen deseado (%)</label><input id="targetMargin" type="number" inputmode="decimal" min="0" max="90" step="1" value="35"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Resultados automáticos</h2>
+      <div class="result-grid">
+        <div class="result"><strong>Materiales</strong><span id="materials">$0.00</span></div>
+        <div class="result"><strong>Mano de obra</strong><span id="labor">$0.00</span></div>
+        <div class="result"><strong>Desperdicio</strong><span id="wasteCost">$0.00</span></div>
+        <div class="result gold"><strong>Costo total real</strong><span id="costBase">$0.00</span></div>
+        <div class="result main"><strong>Precio sugerido</strong><span id="suggested">$0.00</span></div>
+        <div class="result"><strong>Comisión estimada</strong><span id="fee">$0.00</span></div>
+        <div class="result main"><strong>Ganancia estimada</strong><span id="profit">$0.00</span></div>
+        <div class="result"><strong>Margen estimado</strong><span id="margin">0.0%</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>5. Prueba otro precio</h2>
+      <div class="grid">
+        <div class="field"><label>Precio que quieres cobrar ($)</label><input id="testPrice" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Descuento que quieres aplicar (%)</label><input id="discountPct" type="number" inputmode="decimal" min="0" max="100" step="1" value="0"></div>
+      </div>
+      <div class="result-grid" style="margin-top:10px">
+        <div class="result"><strong>Precio final tras descuento</strong><span id="finalTestPrice">$0.00</span></div>
+        <div class="result"><strong>Ganancia real</strong><span id="testProfit">$0.00</span></div>
+        <div class="result"><strong>Margen real</strong><span id="testMargin">0.0%</span></div>
+        <div class="result"><strong>Diferencia vs. sugerido</strong><span id="difference">$0.00</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6. Precios rápidos según margen</h2>
+      <div class="tiers" id="tiers"></div>
+    </section>
+
+    <section class="card">
+      <h2>7. Notas y mensaje para cliente</h2>
+      <div class="grid">
+        <div class="field"><label>Notas internas</label><textarea id="internalNotes" placeholder="Colores, flores solicitadas, sustituciones, detalles..."></textarea></div>
+        <div class="field"><label>Mensaje de tarjeta</label><textarea id="cardMessage" placeholder="Mensaje para el destinatario"></textarea></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Guardar / finalizar cotización</h2>
+      <div class="grid">
+        <div class="field"><label>Precio final vendido ($)</label><input id="soldPrice" type="number" inputmode="decimal" min="0" step="0.01" value="0"></div>
+        <div class="field"><label>Estado</label>
+          <select id="quoteStatus">
+            <option>Cotización</option>
+            <option>Confirmado</option>
+            <option>Pagado</option>
+            <option>Entregado</option>
+            <option>Cancelado</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <button class="primary" onclick="saveQuote()">Guardar cotización</button>
+        <button class="green" onclick="printQuote()">Guardar / imprimir PDF</button>
+        <button class="secondary" onclick="newQuote()">Nueva cotización</button>
+      </div>
+      <div class="notice" style="margin-top:10px">
+        Para imprimir una cotización limpia, toca <b>Guardar / imprimir PDF</b> y en iPhone usa Compartir → Imprimir → pellizca la vista previa para abrirla → Compartir → Guardar en Archivos.
+      </div>
+    </section>
+
+    <section class="card" id="historySection">
+      <div class="section-title">
+        <h2>9. Dashboard e historial</h2>
+        <span class="badge">☁️ Nube privada</span>
+      </div>
+      <div class="kpi">
+        <div class="kbox"><b>Ventas</b><span id="kpiSales">$0</span></div>
+        <div class="kbox"><b>Ganancia</b><span id="kpiProfit">$0</span></div>
+        <div class="kbox"><b>Cotizaciones</b><span id="kpiQuotes">0</span></div>
+        <div class="kbox"><b>Ticket prom.</b><span id="kpiAvg">$0</span></div>
+      </div>
+      <div style="overflow:auto;margin-top:12px">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Cliente / arreglo</th>
+              <th>Estado</th>
+              <th>Venta</th>
+              <th>Ganancia</th>
+              <th>Margen</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="history"></tbody>
+        </table>
+      </div>
+      <div class="row no-print">
+        <button class="secondary" onclick="exportCSV()">Exportar CSV</button>
+        <button class="danger" onclick="clearHistory()">Borrar historial</button>
+      </div>
+    </section>
+
+    <section class="card print-only" id="printSummary">
+      <div class="quote-head">
+        <div>
+          <div class="quote-brand" id="printBusiness">Florist Calculator Pro</div>
+          <div id="printContact"></div>
+        </div>
+        <div><b>COTIZACIÓN</b><br><span id="printQuoteNo"></span></div>
+      </div>
+      <hr style="border:0;border-top:1px solid #ddd;margin:14px 0">
+      <div id="printDetails"></div>
+      <h3>Resumen</h3>
+      <table>
+        <tr><th>Costo total</th><td id="printCost"></td></tr>
+        <tr><th>Precio cotizado</th><td id="printPrice"></td></tr>
+        <tr><th>Ganancia estimada</th><td id="printProfit"></td></tr>
+      </table>
+      <p><b>Mensaje:</b> <span id="printMessage"></span></p>
+      <p class="small">Cotización sujeta a disponibilidad de flores y materiales. Ajusta tus propias políticas antes de entregar al cliente.</p>
+    </section>
+
+    <div class="footer">Florist Calculator Pro • Herramienta de apoyo para negocios florales</div>
+  </div>
+</div>
+
+<script>
+const costIds = ["flowers","foliage","base","mechanics","wrap","accessories","packaging","other"];
+const calcIds = [...costIds,"hours","hourly","delivery","overhead","waste","feePct","fixedFee","targetMargin","testPrice","discountPct"];
+const $ = id => document.getElementById(id);
+const n = id => parseFloat($(id)?.value) || 0;
+const money = x => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(isFinite(x) ? x : 0);
+const pct = x => (isFinite(x) ? x : 0).toFixed(1) + "%";
+const settingsKey = "floristCalculatorProSettings";
+
+let cloudQuotes = [];
+
+function nextQuoteNumber(){
+  let maxNum = 0;
+  for(const q of cloudQuotes){
+    const m = String(q.quote_number || "").match(/Q-(\d+)/i);
+    if(m) maxNum = Math.max(maxNum, parseInt(m[1],10) || 0);
+  }
+  return "Q-" + String(maxNum + 1).padStart(4,"0");
+}
+
+function updateQuoteBadge(){
+  const el = $("quoteNumberBadge");
+  if(el) el.textContent = nextQuoteNumber();
+}
+
+function calc(){
+  const materials = costIds.reduce((a,id) => a + n(id),0);
+  const wasteCost = materials * (n("waste") / 100);
+  const labor = n("hours") * n("hourly");
+  const operating = n("delivery") + n("overhead");
+  const costBeforePlatform = materials + wasteCost + labor + operating;
+
+  const feeRate = n("feePct") / 100;
+  const fixed = n("fixedFee");
+  const target = n("targetMargin") / 100;
+  const denom = 1 - feeRate - target;
+
+  const suggested = denom > 0 ? (costBeforePlatform + fixed) / denom : 0;
+  const fee = suggested * feeRate + fixed;
+  const profit = suggested - costBeforePlatform - fee;
+  const margin = suggested > 0 ? profit / suggested * 100 : 0;
+
+  $("materials").textContent = money(materials);
+  $("wasteCost").textContent = money(wasteCost);
+  $("labor").textContent = money(labor);
+  $("costBase").textContent = money(costBeforePlatform);
+  $("suggested").textContent = money(suggested);
+  $("fee").textContent = money(fee);
+  $("profit").textContent = money(profit);
+  $("margin").textContent = pct(margin);
+
+  const raw = n("testPrice");
+  const finalPrice = raw * (1 - n("discountPct") / 100);
+  const testFee = finalPrice * feeRate + fixed;
+  const testProfit = finalPrice - costBeforePlatform - testFee;
+  const testMargin = finalPrice > 0 ? testProfit / finalPrice * 100 : 0;
+
+  $("finalTestPrice").textContent = money(finalPrice);
+  $("testProfit").textContent = money(testProfit);
+  $("testMargin").textContent = pct(testMargin);
+  $("difference").textContent = money(finalPrice - suggested);
+
+  const margins = [25,30,35,40,45];
+  $("tiers").innerHTML = margins.map(m => {
+    const d = 1 - feeRate - (m / 100);
+    const p = d > 0 ? (costBeforePlatform + fixed) / d : 0;
+    return `<div class="tier"><b>${m}% margen</b><div class="price">${money(p)}</div></div>`;
+  }).join("");
+
+  return {
+    materials,
+    wasteCost,
+    labor,
+    operating,
+    costBeforePlatform,
+    suggested,
+    fee,
+    profit,
+    margin,
+    feeRate,
+    fixed
+  };
+}
+
+calcIds.forEach(id => {
+  const el = $(id);
+  if(el) el.addEventListener("input", calc);
+});
+
+function saveSettings(){
+  const data = {
+    businessName:$("businessName")?.value || "",
+    businessContact:$("businessContact")?.value || ""
+  };
+  localStorage.setItem(settingsKey, JSON.stringify(data));
+  $("topBusiness").textContent = data.businessName || "Florist Calculator Pro";
+}
+
+["businessName","businessContact"].forEach(id => {
+  const el = $(id);
+  if(el) el.addEventListener("input", saveSettings);
+});
+
+function startApp(){
+  const name = $("welcomeBusiness").value.trim();
+  if(name) $("businessName").value = name;
+  saveSettings();
+  localStorage.setItem("floristCalcWelcomed","1");
+  $("welcomeModal").classList.add("hidden");
+}
+
+function loadSettings(){
+  let s = {};
+  try{
+    s = JSON.parse(localStorage.getItem(settingsKey) || "{}");
+  }catch(e){}
+
+  $("businessName").value = s.businessName || "";
+  $("businessContact").value = s.businessContact || "";
+  $("topBusiness").textContent = s.businessName || "Florist Calculator Pro";
+
+  if(localStorage.getItem("floristCalcWelcomed") === "1"){
+    $("welcomeModal").classList.add("hidden");
+  }
+}
+
+function quoteData(){
+  const c = calc();
+  const finalSale =
+    n("soldPrice") ||
+    n("testPrice") * (1 - n("discountPct") / 100) ||
+    c.suggested;
+
+  const finalFee = finalSale * c.feeRate + c.fixed;
+  const finalProfit = finalSale - c.costBeforePlatform - finalFee;
+  const finalMargin = finalSale > 0 ? finalProfit / finalSale * 100 : 0;
+
+  return {
+    id:nextQuoteNumber(),
+    ts:new Date().toISOString(),
+    business:$("businessName").value.trim(),
+    contact:$("businessContact").value.trim(),
+    customer:$("customerName").value.trim(),
+    phone:$("customerPhone").value.trim(),
+    arrangement:$("arrangementName").value.trim(),
+    occasion:$("occasion").value.trim(),
+    dueDate:$("dueDate").value,
+    deliveryType:$("deliveryType").value,
+    internalNotes:$("internalNotes").value.trim(),
+    cardMessage:$("cardMessage").value.trim(),
+    status:$("quoteStatus").value,
+    sale:finalSale,
+    cost:c.costBeforePlatform,
+    profit:finalProfit,
+    margin:finalMargin,
+    suggested:c.suggested
+  };
+}
+
+async function saveQuote(){
+  const d = quoteData();
+  const { data:sessionData, error:sessionError } = await supabaseClient.auth.getSession();
+  const user = sessionData?.session?.user;
+
+  if(sessionError || !user){
+    alert("Tu sesión expiró. Inicia sesión nuevamente.");
+    await applyAuthState(null);
+    return;
+  }
+
+  const payload = {
+    user_id:user.id,
+    quote_number:d.id,
+    business_name:d.business,
+    business_contact:d.contact,
+    customer_name:d.customer,
+    customer_phone:d.phone,
+    arrangement_name:d.arrangement,
+    occasion:d.occasion,
+    due_date:d.dueDate || null,
+    delivery_type:d.deliveryType,
+    status:d.status,
+    sale:d.sale,
+    cost:d.cost,
+    profit:d.profit,
+    margin:d.margin,
+    internal_notes:d.internalNotes,
+    card_message:d.cardMessage
+  };
+
+  const { error } = await supabaseClient
+    .from("florist_quotes")
+    .insert(payload);
+
+  if(error){
+    console.error("Save quote error:", error);
+    alert("No se pudo guardar la cotización. Intenta nuevamente.");
+    return;
+  }
+
+  await loadHistory();
+  updateQuoteBadge();
+  alert("Cotización guardada en tu cuenta.");
+}
+
+function newQuote(){
+  ["customerName","customerPhone","arrangementName","occasion","dueDate","internalNotes","cardMessage"]
+    .forEach(id => $(id).value = "");
+
+  costIds.forEach(id => $(id).value = 0);
+
+  ["hours","delivery","overhead","feePct","fixedFee","testPrice","discountPct","soldPrice"]
+    .forEach(id => $(id).value = 0);
+
+  $("hourly").value = 20;
+  $("waste").value = 5;
+  $("targetMargin").value = 35;
+  $("deliveryType").value = "Pickup";
+  $("quoteStatus").value = "Cotización";
+
+  calc();
+  updateQuoteBadge();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function loadHistory(){
+  const { data:sessionData } = await supabaseClient.auth.getSession();
+  const user = sessionData?.session?.user;
+
+  if(!user){
+    cloudQuotes = [];
+    renderHistory();
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("florist_quotes")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error("Load history error:", error);
+    cloudQuotes = [];
+    $("history").innerHTML =
+      '<tr><td class="empty" colspan="7">No se pudo cargar el historial.</td></tr>';
+    return;
+  }
+
+  cloudQuotes = data || [];
+  renderHistory();
+  updateQuoteBadge();
+}
+
+function renderHistory(){
+  const rows = cloudQuotes;
+
+  $("history").innerHTML = rows.length
+    ? rows.map((r,i) => `
+      <tr>
+        <td>${escapeHtml(r.quote_number || "")}</td>
+        <td><b>${escapeHtml(r.customer_name || "Sin cliente")}</b><br>${escapeHtml(r.arrangement_name || "Sin nombre")}</td>
+        <td>${escapeHtml(r.status || "")}</td>
+        <td>${money(Number(r.sale) || 0)}</td>
+        <td>${money(Number(r.profit) || 0)}</td>
+        <td>${pct(Number(r.margin) || 0)}</td>
+        <td><button class="secondary" style="padding:7px 9px;font-size:11px" onclick="deleteQuote(${i})">Eliminar</button></td>
+      </tr>
+    `).join("")
+    : '<tr><td class="empty" colspan="7">Todavía no hay cotizaciones guardadas.</td></tr>';
+
+  const sales = rows.reduce((a,r) => a + (Number(r.sale) || 0),0);
+  const prof = rows.reduce((a,r) => a + (Number(r.profit) || 0),0);
+
+  $("kpiSales").textContent = money(sales);
+  $("kpiProfit").textContent = money(prof);
+  $("kpiQuotes").textContent = rows.length;
+  $("kpiAvg").textContent = money(rows.length ? sales / rows.length : 0);
+}
+
+async function deleteQuote(i){
+  const row = cloudQuotes[i];
+  if(!row) return;
+  if(!confirm("¿Eliminar esta cotización?")) return;
+
+  const { error } = await supabaseClient
+    .from("florist_quotes")
+    .delete()
+    .eq("id",row.id);
+
+  if(error){
+    console.error("Delete quote error:", error);
+    alert("No se pudo eliminar la cotización.");
+    return;
+  }
+
+  await loadHistory();
+}
+
+async function clearHistory(){
+  if(!confirm("¿Borrar TODO tu historial de cotizaciones? Esta acción no se puede deshacer.")) return;
+
+  const { data:sessionData } = await supabaseClient.auth.getSession();
+  const user = sessionData?.session?.user;
+  if(!user) return;
+
+  const { error } = await supabaseClient
+    .from("florist_quotes")
+    .delete()
+    .eq("user_id",user.id);
+
+  if(error){
+    console.error("Clear history error:", error);
+    alert("No se pudo borrar el historial.");
+    return;
+  }
+
+  await loadHistory();
+}
+
+function exportCSV(){
+  const rows = cloudQuotes;
+
+  if(!rows.length){
+    alert("No hay historial para exportar.");
+    return;
+  }
+
+  const head = "Cotizacion,Fecha,Cliente,Arreglo,Estado,Venta,Costo,Ganancia,Margen";
+
+  const lines = rows.map(r => [
+    r.quote_number,
+    r.created_at,
+    r.customer_name,
+    r.arrangement_name,
+    r.status,
+    r.sale,
+    r.cost,
+    r.profit,
+    r.margin
+  ].map(csvSafe).join(","));
+
+  const blob = new Blob([[head,...lines].join("\n")],{
+    type:"text/csv;charset=utf-8;"
+  });
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "historial_florist_calculator.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function csvSafe(v){
+  return `"${String(v ?? "").replaceAll('"','""')}"`;
+}
+
+function preparePrint(){
+  const d = quoteData();
+
+  $("printBusiness").textContent = d.business || "Florist Calculator Pro";
+  $("printContact").textContent = d.contact || "";
+  $("printQuoteNo").textContent = d.id;
+
+  $("printDetails").innerHTML = `
+    <p><b>Cliente:</b> ${escapeHtml(d.customer || "")} &nbsp; <b>Tel:</b> ${escapeHtml(d.phone || "")}</p>
+    <p><b>Arreglo:</b> ${escapeHtml(d.arrangement || "")} &nbsp; <b>Ocasión:</b> ${escapeHtml(d.occasion || "")}</p>
+    <p><b>Fecha:</b> ${escapeHtml(d.dueDate || "")} &nbsp; <b>Entrega:</b> ${escapeHtml(d.deliveryType || "")}</p>
+  `;
+
+  $("printCost").textContent = money(d.cost);
+  $("printPrice").textContent = money(d.sale);
+  $("printProfit").textContent = money(d.profit);
+  $("printMessage").textContent = d.cardMessage || "";
+}
+
+function printQuote(){
+  preparePrint();
+  setTimeout(() => window.print(),100);
+}
+
+function scrollToHistory(){
+  document.getElementById("historySection").scrollIntoView({behavior:"smooth"});
+}
+
+function escapeHtml(s){
+  return String(s ?? "").replace(/[&<>"']/g,m => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[m]));
+}
+
+/* -----------------------------
+   SUPABASE / AUTH
+------------------------------ */
+
+const SUPABASE_URL = "https://ebdzuuwpexuzuipxkwfo.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_erqmDYBZ4I4tzRF3lunSWw_qzbkER3u";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+function setAuthStatus(message,type="ok"){
+  const box = document.getElementById("authStatusBox");
+  const msg = document.getElementById("authMessage");
+
+  if(msg) msg.textContent = "";
+  if(!box) return;
+
+  if(!message){
+    box.classList.add("hidden");
+    box.textContent = "";
+    return;
+  }
+
+  box.className = "auth-status " + (type === "err" ? "err" : "ok");
+  box.textContent = message;
+}
+
+function showAuthPanel(which){
+  const login = document.getElementById("loginPanel");
+  const activate = document.getElementById("activatePanel");
+  const recovery = document.getElementById("recoveryPanel");
+  const tabs = document.getElementById("authTabs");
+
+  login.classList.add("hidden");
+  activate.classList.add("hidden");
+  recovery.classList.add("hidden");
+
+  if(tabs) tabs.classList.remove("hidden");
+
+  document.getElementById("loginTabBtn")?.classList.remove("active");
+  document.getElementById("activateTabBtn")?.classList.remove("active");
+
+  setAuthStatus("");
+
+  if(which === "activate"){
+    activate.classList.remove("hidden");
+    document.getElementById("activateTabBtn")?.classList.add("active");
+  }else if(which === "recovery"){
+    recovery.classList.remove("hidden");
+    if(tabs) tabs.classList.add("hidden");
+  }else{
+    login.classList.remove("hidden");
+    document.getElementById("loginTabBtn")?.classList.add("active");
+  }
+}
+
+function formatDate(value){
+  if(!value) return "—";
+  const d = new Date(value);
+  if(Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleDateString("es-US",{
+    month:"short",
+    day:"numeric",
+    year:"numeric"
+  });
+}
+
+function renderSubscription(license){
+  const status = document.getElementById("subscriptionStatus");
+  const plan = document.getElementById("subscriptionPlan");
+  const start = document.getElementById("subscriptionStart");
+  const end = document.getElementById("subscriptionEnd");
+  const days = document.getElementById("subscriptionDays");
+  const note = document.getElementById("subscriptionNote");
+  const planBtn = document.getElementById("planBtn");
+
+  if(!license){
+    if(status) status.textContent = "Sin acceso";
+    return;
+  }
+
+  const planLabel =
+    license.plan === "trial" ? "Prueba gratis" :
+    license.plan === "yearly" ? "Anual" :
+    license.plan === "monthly" ? "Mensual" :
+    "Acceso";
+
+  if(plan) plan.textContent = planLabel;
+  if(start) start.textContent = formatDate(license.starts_at);
+  if(end) end.textContent = formatDate(license.expires_at);
+
+  let remaining = Number(license.days_remaining);
+
+  if(!Number.isFinite(remaining)){
+    const expiration = license.expires_at ? new Date(license.expires_at) : null;
+    remaining = expiration
+      ? Math.max(0,Math.ceil((expiration.getTime() - Date.now()) / 86400000))
+      : 0;
+  }
+
+  if(days) days.textContent = String(Math.max(0,remaining));
+  if(status) status.textContent = license.is_active ? "Activa" : "Vencida";
+
+  if(note){
+    if(license.plan === "trial" && license.is_active){
+      note.textContent =
+        remaining <= 2
+          ? `Tu prueba gratis termina pronto. Te quedan ${Math.max(0,remaining)} día(s). Elige un plan para conservar tu acceso.`
+          : `Tu prueba gratis está activa hasta ${formatDate(license.expires_at)}.`;
+    }else if(license.is_active){
+      note.textContent =
+        `Tu plan ${planLabel.toLowerCase()} está activo hasta ${formatDate(license.expires_at)}.`;
+    }else{
+      note.textContent =
+        "Tu acceso está vencido. Elige un plan mensual o anual para continuar.";
+    }
+  }
+
+  if(planBtn){
+    planBtn.style.display = "inline-block";
+    planBtn.textContent = planLabel;
+  }
+}
+
+async function verifyCurrentUserLicense(session){
+  if(!session?.user){
+    return {
+      licensed:false,
+      license:null,
+      accessType:"none"
+    };
+  }
+
+  const { data,error } = await supabaseClient.rpc("get_florist_access");
+
+  if(error){
+    console.error("Access verification error:",error);
+    return {
+      licensed:false,
+      license:null,
+      accessType:"none"
+    };
+  }
+
+  const access = Array.isArray(data) ? data[0] : data;
+
+  if(!access){
+    return {
+      licensed:false,
+      license:null,
+      accessType:"none"
+    };
+  }
+
+  return {
+    licensed:!!access.access_granted,
+    accessType:access.access_type || "none",
+    license:{
+      exists:true,
+      is_active:!!access.access_granted,
+      plan:access.plan,
+      starts_at:access.starts_at,
+      expires_at:access.expires_at,
+      days_remaining:access.days_remaining,
+      square_status:access.square_status
+    }
+  };
+}
+
+async function applyAuthState(session){
+  const gate = document.getElementById("authGate");
+  const app = document.getElementById("appShell");
+  const ue = document.getElementById("userEmailBtn");
+  const planBtn = document.getElementById("planBtn");
+
+  if(session?.user){
+    const verification = await verifyCurrentUserLicense(session);
+
+    if(!verification.licensed){
+      if(ue) ue.style.display = "none";
+      if(planBtn) planBtn.style.display = "none";
+
+      app.classList.add("hidden");
+      gate.classList.remove("hidden");
+      showAuthPanel("login");
+
+      setAuthStatus(
+        "Tu prueba gratis terminó o no tienes una suscripción activa. Elige un plan mensual o anual para continuar.",
+        "err"
+      );
+
+      return;
+    }
+
+    gate.classList.add("hidden");
+    app.classList.remove("hidden");
+
+    if(ue){
+      ue.textContent = session.user.email || "Cuenta";
+      ue.style.display = "inline-block";
+    }
+
+    renderSubscription(verification.license);
+    await loadHistory();
+    updateQuoteBadge();
+
+    return;
+  }
+
+  cloudQuotes = [];
+  renderHistory();
+
+  if(ue) ue.style.display = "none";
+  if(planBtn) planBtn.style.display = "none";
+
+  app.classList.add("hidden");
+  gate.classList.remove("hidden");
+}
+
+async function signInUser(){
+  const email = document
+    .getElementById("loginEmail")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  if(!email || !password){
+    setAuthStatus("Escribe tu email y contraseña.","err");
+    return;
+  }
+
+  setAuthStatus("Verificando acceso...");
+
+  const { data,error } =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+    console.error("Sign in error:",error);
+    setAuthStatus(
+      "No se pudo iniciar sesión. Verifica tu email y contraseña.",
+      "err"
+    );
+    return;
+  }
+
+  const verification = await verifyCurrentUserLicense(data.session);
+
+  if(!verification.licensed){
+    setAuthStatus(
+      "Tu prueba gratis terminó o este email no tiene una suscripción activa.",
+      "err"
+    );
+    return;
+  }
+
+  setAuthStatus("");
+  await applyAuthState(data.session);
+}
+
+async function activateAccess(){
+  const email = document
+    .getElementById("activateEmail")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const p1 =
+    document.getElementById("activatePassword").value;
+
+  const p2 =
+    document.getElementById("activatePassword2").value;
+
+  if(!email){
+    setAuthStatus("Escribe tu email.","err");
+    return;
+  }
+
+  if(p1.length < 8){
+    setAuthStatus(
+      "La contraseña debe tener al menos 8 caracteres.",
+      "err"
+    );
+    return;
+  }
+
+  if(p1 !== p2){
+    setAuthStatus("Las contraseñas no coinciden.","err");
+    return;
+  }
+
+  setAuthStatus("Creando tu prueba gratis de 7 días...");
+
+  const { data,error } =
+    await supabaseClient.auth.signUp({
+      email,
+      password:p1,
+      options:{
+        emailRedirectTo:window.location.origin
+      }
+    });
+
+  if(error){
+    console.error("Signup error:",error);
+
+    const message = String(error.message || "").toLowerCase();
+
+    if(
+      message.includes("already") ||
+      message.includes("registered")
+    ){
+      setAuthStatus(
+        "Este email ya tiene una cuenta. Usa Iniciar sesión u Olvidé mi contraseña.",
+        "err"
+      );
+    }else{
+      setAuthStatus(
+        "No se pudo crear la cuenta. Intenta nuevamente.",
+        "err"
+      );
+    }
+
+    return;
+  }
+
+  if(data.session){
+    setAuthStatus("¡Prueba gratis activada! Entrando...");
+    await applyAuthState(data.session);
+  }else{
+    showAuthPanel("login");
+    document.getElementById("loginEmail").value = email;
+    setAuthStatus(
+      "Cuenta creada. Revisa tu email, confirma tu dirección y después inicia sesión."
+    );
+  }
+}
+
+async function signOutUser(){
+  await supabaseClient.auth.signOut();
+  showAuthPanel("login");
+  setAuthStatus("Sesión cerrada correctamente.");
+  await applyAuthState(null);
+}
+
+async function sendReset(){
+  const email =
+    document.getElementById("loginEmail").value.trim().toLowerCase();
+
+  if(!email){
+    setAuthStatus("Escribe tu email primero.","err");
+    return;
+  }
+
+  const { error } =
+    await supabaseClient.auth.resetPasswordForEmail(email,{
+      redirectTo:window.location.origin
+    });
+
+  if(error){
+    console.error("Reset password error:",error);
+  }
+
+  setAuthStatus(
+    error
+      ? "No se pudo enviar el enlace de recuperación."
+      : "Revisa tu correo. Te enviamos un enlace para cambiar tu contraseña.",
+    error ? "err" : "ok"
+  );
+}
+
+async function updateRecoveredPassword(){
+  const p1 =
+    document.getElementById("recoveryPassword").value;
+
+  const p2 =
+    document.getElementById("recoveryPassword2").value;
+
+  if(p1.length < 8){
+    setAuthStatus(
+      "La contraseña debe tener al menos 8 caracteres.",
+      "err"
+    );
+    return;
+  }
+
+  if(p1 !== p2){
+    setAuthStatus("Las contraseñas no coinciden.","err");
+    return;
+  }
+
+  const { error } =
+    await supabaseClient.auth.updateUser({
+      password:p1
+    });
+
+  if(error){
+    console.error("Password update error:",error);
+    setAuthStatus(
+      "No se pudo actualizar la contraseña.",
+      "err"
+    );
+    return;
+  }
+
+  setAuthStatus("Contraseña actualizada. Ya puedes usar tu cuenta.");
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+  await applyAuthState(data.session);
+}
+
+/* Auth event listener */
+supabaseClient.auth.onAuthStateChange(async (event,session) => {
+  if(event === "PASSWORD_RECOVERY"){
+    document.getElementById("authGate").classList.remove("hidden");
+    document.getElementById("appShell").classList.add("hidden");
+    showAuthPanel("recovery");
+    setAuthStatus("Elige una contraseña nueva.");
+    return;
+  }
+
+  if(
+    event === "SIGNED_IN" ||
+    event === "TOKEN_REFRESHED" ||
+    event === "INITIAL_SESSION"
+  ){
+    await applyAuthState(session);
+  }
+
+  if(event === "SIGNED_OUT"){
+    await applyAuthState(null);
+  }
+});
+
+/* Square redirect */
+function handleSquareReturn(){
+  const params = new URLSearchParams(window.location.search);
+
+  if(params.get("activate") === "1"){
+    showAuthPanel("activate");
+
+    const gate = document.getElementById("authGate");
+    const app = document.getElementById("appShell");
+
+    gate.classList.remove("hidden");
+    app.classList.add("hidden");
+
+    setAuthStatus(
+      "¡Pago recibido! Usa el mismo email con el que pagaste en Square para crear o activar tu cuenta."
+    );
+  }
+}
+
+/* Initial app boot */
+async function bootApp(){
+  loadSettings();
+  calc();
+  renderHistory();
+
+  handleSquareReturn();
+
+  const { data } = await supabaseClient.auth.getSession();
+
+  if(!new URLSearchParams(window.location.search).has("activate")){
+    await applyAuthState(data.session);
+  }
+}
+
+bootApp();
+</script>
+
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",async () => {
+    try{
+      const registration = await navigator.serviceWorker.register(
+        "/sw.js",
+        {updateViaCache:"none"}
+      );
+      await registration.update();
+    }catch(err){
+      console.error("Service worker:",err);
+    }
+  });
+}
+</script>
+
+</body>
+</html>
